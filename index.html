@@ -883,7 +883,7 @@ function render(time) {
       .forEach(({ el, sp, lag }) => {
         let aIn = seg(l, .1 + lag, .24 + lag), aOut = last ? 1 : 1 - seg(l, .68 - lag, .82 - lag);
         if (k === 0) aIn = 1;
-        const a = aIn * aOut, y = (clamp(l, 0, 1) - (k === 0 ? 0 : .45)) * -120 * sp   /* scene I starts at rest, so its spacing reads true on arrival */ + (1 - aIn) * 22 * sp - (1 - aOut) * 26 * sp;
+        const a = aIn * aOut, y = (last ? 0 : (clamp(l, 0, 1) - (k === 0 ? 0 : .45)) * -120 * sp)   /* closing line stays put below the stone */   /* scene I starts at rest, so its spacing reads true on arrival */ + (1 - aIn) * 22 * sp - (1 - aOut) * 26 * sp;
         el.style.opacity = a.toFixed(3);
         el.style.transform = `translate3d(0, ${y.toFixed(1)}px, 0)`;
         const blur = (1 - aIn) * 6 + (1 - aOut) * 12; el.style.filter = blur > .1 ? `blur(${blur.toFixed(1)}px)` : "none";
