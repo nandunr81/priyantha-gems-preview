@@ -213,13 +213,13 @@
     <div class="vignette"></div>
     <div class="grain" id="grain" aria-hidden="true"></div>
 
-    <div class="cap" data-scene="0"><div class="num">I</div><h2>Where it begins</h2>
+    <div class="cap" data-scene="0"><h2>Where it begins</h2>
       <p>In the gravel of Ratnapura, a sapphire waits in the dark.</p></div>
-    <div class="cap" data-scene="1"><div class="num">II</div><h2>Into the light</h2>
+    <div class="cap" data-scene="1"><h2>Into the light</h2>
       <p>We raise it slowly, up through the shored shaft.</p></div>
-    <div class="cap" data-scene="2"><div class="num">III</div><h2>Weighed in the hand</h2>
+    <div class="cap" data-scene="2"><h2>Weighed in the hand</h2>
       <p>I turn it to the light and see what it could become.</p></div>
-    <div class="cap" data-scene="3"><div class="num">IV</div><h2>Slowly revealed</h2>
+    <div class="cap" data-scene="3"><h2>Slowly revealed</h2>
       <p>Water, grit and patience: no step is ever hurried.</p>
       <ul class="steps"><li>Preform</li><li>Pavilion</li><li>Crown</li><li>Polish</li></ul></div>
     <div class="cap final" data-scene="4"><h2>From the earth, to the hand,<br> to the light.</h2></div>
@@ -1111,7 +1111,7 @@ const COPY = caps.map(c => ({ n: c.querySelector(".num")?.textContent || "V", h:
 function buildStills() {
   stills.innerHTML = "";
   COPY.forEach((c, i) => { const fig = document.createElement("figure"), cv = document.createElement("canvas");
-    fig.innerHTML = `<figcaption><div class="num">${c.n}</div><h2>${c.h}</h2><p>${c.p}</p></figcaption>`; fig.prepend(cv); stills.append(fig);
+    fig.innerHTML = `<figcaption><h2>${c.h}</h2><p>${c.p}</p></figcaption>`; fig.prepend(cv); stills.append(fig);
     requestAnimationFrame(() => { const r = cv.getBoundingClientRect(), d = Math.min(devicePixelRatio || 1, 2); cv.width = r.width * d; cv.height = r.height * d;
       const c2 = cv.getContext("2d"); c2.setTransform(d, 0, 0, d, 0, 0); const prev = [state.ambient, state.mx, state.my]; state.ambient = false; state.mx = state.my = 0;
       drawScene(c2, r.width, r.height, i, i === 4 ? .9 : .7, 0); [state.ambient, state.mx, state.my] = prev;
