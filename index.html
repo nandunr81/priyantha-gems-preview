@@ -838,7 +838,9 @@ getSeq(0);
 function drawScene(ctx, w, h, i, t, time) {
   const m = sceneMedia[i], u = Math.min(w, h), seq = !m && getSeq(i);
   if (seq) { const img = nearest(seq, Math.round(t * (seq.length - 1)));
-    if (img) { const [ox, oy] = off(.35, u, .5); ctx.fillStyle = "#000"; ctx.fillRect(0, 0, w, h); cover(ctx, img, w, h, 1.04, ox, oy); return; } }
+    ctx.fillStyle = "#0a0806"; ctx.fillRect(0, 0, w, h);   // footage scenes never fall back to the drawings: dark until a frame has loaded
+    if (img) { const [ox, oy] = off(.35, u, .5); cover(ctx, img, w, h, 1.04, ox, oy); }
+    return; }
   if (m && m.type === "seq") { ctx.fillStyle = "#000"; ctx.fillRect(0, 0, w, h); const img = nearest(m.imgs, Math.round(t * (m.imgs.length - 1))); if (img) cover(ctx, img, w, h); return; }
   if (m && m.type === "photo" && ready(m.img)) { const [ox, oy] = off(.5, u, t); ctx.fillStyle = "#000"; ctx.fillRect(0, 0, w, h); cover(ctx, m.img, w, h, 1.12 + .1 * ease(t), ox, oy); }
   else SCENES[i].bg(ctx, w, h, t, time);
@@ -1112,7 +1114,10 @@ function buildStills() {
     fig.innerHTML = `<figcaption><div class="num">${c.n}</div><h2>${c.h}</h2><p>${c.p}</p></figcaption>`; fig.prepend(cv); stills.append(fig);
     requestAnimationFrame(() => { const r = cv.getBoundingClientRect(), d = Math.min(devicePixelRatio || 1, 2); cv.width = r.width * d; cv.height = r.height * d;
       const c2 = cv.getContext("2d"); c2.setTransform(d, 0, 0, d, 0, 0); const prev = [state.ambient, state.mx, state.my]; state.ambient = false; state.mx = state.my = 0;
-      drawScene(c2, r.width, r.height, i, i === 4 ? .9 : .7, 0); [state.ambient, state.mx, state.my] = prev; }); });
+      drawScene(c2, r.width, r.height, i, i === 4 ? .9 : .7, 0); [state.ambient, state.mx, state.my] = prev;
+      const seq = getSeq(i), im = seq && seq[Math.round((i === 4 ? .9 : .7) * (seq.length - 1))];   // redraw the still once its frame arrives
+      if (im && !im.complete) im.addEventListener("load", () => { const p2 = [state.ambient, state.mx, state.my]; state.ambient = false; state.mx = state.my = 0;
+        drawScene(c2, r.width, r.height, i, i === 4 ? .9 : .7, 0); [state.ambient, state.mx, state.my] = p2; }, { once: true }); }); });
 }
 function applyRM() { root.classList.toggle("rm", state.rm); if (state.rm) buildStills(); setupLenis(); if (hasGSAP) ScrollTrigger.refresh(); }
 
