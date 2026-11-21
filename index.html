@@ -19,7 +19,7 @@
   html.lenis, html.lenis body{height:auto}
   .lenis.lenis-smooth{scroll-behavior:auto !important}
   a{color:inherit}
-  h1,h2,h3,.caps{font-family:var(--head);font-weight:400;text-transform:uppercase;letter-spacing:.08em}
+  h1,h2,h3,.caps{font-family:var(--head);font-weight:400;text-transform:uppercase;letter-spacing:.02em}
   .label{font-family:var(--head);font-weight:400;text-transform:uppercase;letter-spacing:.22em;font-size:11.5px}
 
   /* ---------- Nav ---------- */
@@ -29,8 +29,12 @@
   .nav ul{display:flex;gap:26px;list-style:none;margin:0 0 0 auto;padding:0}
   .nav ul a{text-decoration:none;font-family:var(--head);text-transform:uppercase;letter-spacing:.16em;font-size:11.5px;opacity:.85}
   .vault-btn{font-family:var(--head);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;white-space:nowrap;
-             padding:12px 20px 10px;border:1px solid var(--gold);border-radius:999px;color:var(--ivory);background:rgba(169,138,75,.12);transition:background .25s,color .25s}
-  .vault-btn:hover{background:var(--gold);color:var(--ink)}
+             padding:12px 20px 10px;border-radius:999px;color:var(--ivory);
+             background:linear-gradient(135deg,rgba(255,255,255,.16),rgba(255,255,255,.04));border:1px solid rgba(255,255,255,.3);
+             -webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%);
+             box-shadow:inset 0 1px 0 rgba(255,255,255,.3),inset 0 -1px 0 rgba(0,0,0,.12),0 8px 24px rgba(0,0,0,.25);
+             transition:background .3s,border-color .3s,transform .3s}
+  .vault-btn:hover{background:linear-gradient(135deg,rgba(232,207,143,.32),rgba(169,138,75,.12));border-color:rgba(232,207,143,.7);transform:translateY(-1px)}
   @media (max-width:980px){ .nav ul{display:none} .vault-btn{margin-left:auto} }
   @media (max-width:520px){ .wordmark{font-size:14px;letter-spacing:.26em} .vault-btn{padding:10px 16px 8px} }
 
@@ -47,17 +51,21 @@
   .cap{position:absolute;left:clamp(20px,6vw,88px);bottom:clamp(64px,12vh,128px);max-width:none;
        will-change:opacity,transform;pointer-events:none;text-shadow:0 2px 22px rgba(0,0,0,.6)}
   .cap .num{font-family:var(--body);font-style:italic;color:var(--gold);font-size:19px}
-  .cap h2{font-size:clamp(19px,4.6vw,54px);line-height:1.08;margin:10px 0 28px;letter-spacing:.07em;white-space:nowrap}   /* headlines never wrap */
-  .cap p{font-size:17px;line-height:1.55;opacity:.88;margin:0;font-weight:300;max-width:440px}
-  @media (max-width:700px){ .cap h2{font-size:5.6vw;letter-spacing:.035em;margin-bottom:20px} .cap p{font-size:16px;max-width:min(440px,78vw)} }
+  .cap h2{font-size:clamp(19px,4.6vw,54px);line-height:1.08;margin:10px 0 24px;letter-spacing:.02em;white-space:nowrap}   /* headlines never wrap */
+  .cap p{font-size:20px;line-height:1.5;opacity:.9;margin:0;font-weight:300;white-space:nowrap}
+  .cap .w{display:inline-block;will-change:opacity,transform,filter}   /* words revealed one by one */
+  .cap[data-scene="0"]{bottom:clamp(170px,31vh,330px)}               /* opening caption sits higher, with the scroll cue beneath */
+  @media (max-width:900px){ .cap p{white-space:normal;max-width:min(520px,80vw)} }
+  @media (max-width:700px){ .cap h2{font-size:5.6vw;letter-spacing:.02em;margin-bottom:18px} .cap p{font-size:17px} .cap[data-scene="0"]{bottom:26vh} }
   .cap .steps{list-style:none;padding:0;margin:18px 0 0;display:flex;gap:10px;flex-wrap:wrap}
   .cap .steps li{font-family:var(--head);font-size:11px;letter-spacing:.18em;text-transform:uppercase;padding:9px 11px 7px;
                  border:1px solid rgba(246,242,236,.18);background:rgba(20,17,15,.45);opacity:.3;transition:opacity .35s,border-color .35s}
   .cap .steps li.on{opacity:1;border-color:var(--gold)}
   .cap > *{opacity:0;will-change:opacity,transform,filter}
-  .cap.final{transform:translateX(-50%);left:50%;bottom:clamp(44px,9vh,96px);text-align:center;max-width:none;width:min(94vw,1100px)}
-  .cap.final h2{font-size:clamp(15px,2.9vw,40px);letter-spacing:.14em;line-height:1.45;margin:0}   /* two centred lines at every size */
-  @media (max-width:600px){ .cap.final h2{font-size:4.4vw;letter-spacing:.06em;line-height:1.5} }
+  .cap.final{transform:translateX(-50%);left:50%;bottom:calc(clamp(34px,3.6vw,56px) + clamp(40px,7vh,84px));text-align:center;max-width:none;width:min(94vw,1100px)}
+  .cap.final h2{font-size:clamp(15px,2.9vw,40px);letter-spacing:.02em;line-height:1.45;margin:0;white-space:nowrap}   /* two centred lines */
+  @media (max-width:900px){ .cap.final h2{white-space:normal} }
+  @media (max-width:600px){ .cap.final h2{font-size:4.6vw;letter-spacing:.02em;line-height:1.5} }
 
   .rail{position:absolute;right:clamp(16px,3vw,40px);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:15px}
   .rail span{display:flex;align-items:center;gap:10px;justify-content:flex-end;font-family:var(--head);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;opacity:.35;transition:opacity .3s}
@@ -65,13 +73,14 @@
   .rail span.on{opacity:1}.rail span.on i{width:40px;background:var(--gold)}
   @media (max-width:700px){ .rail span b{display:none} }
 
-  .scroll-hint{position:absolute;right:clamp(16px,3vw,40px);bottom:26px;display:flex;flex-direction:column;align-items:center;gap:14px;
-               font-family:var(--head);font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--ivory);pointer-events:none;opacity:0}
-  .scroll-hint span{writing-mode:vertical-rl;text-shadow:0 1px 14px rgba(0,0,0,.6)}
-  .scroll-hint::after{content:"";display:block;width:1px;height:64px;background:linear-gradient(var(--gold),rgba(169,138,75,0));animation:drip 2.2s infinite}
-  .scroll-hint.intro span{animation:cue 1.8s ease-in-out 3}
-  @keyframes cue{50%{opacity:.4}}
-  @media (max-height:760px){ .scroll-hint{font-size:10px;letter-spacing:.26em;gap:10px} .scroll-hint::after{height:42px} }
+  .scroll-hint{position:relative;display:inline-flex;align-items:center;gap:16px;margin-top:36px;
+               font-family:var(--head);font-size:11.5px;letter-spacing:.26em;text-transform:uppercase;color:#f1dfb2;pointer-events:none;opacity:0;
+               text-shadow:0 1px 14px rgba(0,0,0,.6)}
+  .scroll-hint .sh-line{position:relative;width:84px;height:1px;background:rgba(232,207,143,.3);overflow:visible}
+  .scroll-hint .sh-line i{position:absolute;left:0;top:-1px;width:30px;height:3px;border-radius:3px;
+               background:linear-gradient(90deg,rgba(232,207,143,0),#f2d896);box-shadow:0 0 12px 3px rgba(242,216,150,.7);animation:sweep 1.9s cubic-bezier(.65,0,.35,1) infinite}
+  @keyframes sweep{0%{transform:translateX(-30px);opacity:0}15%,80%{opacity:1}100%{transform:translateX(84px);opacity:0}}
+  @media (max-width:700px){ .scroll-hint{margin-top:26px;font-size:10.5px;letter-spacing:.22em;gap:12px} .scroll-hint .sh-line{width:56px} }
   @keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 
   /* ---------- Preloader: emerald-cut gem, drawn in gold, with a passing glint ---------- */
@@ -116,7 +125,7 @@
   /* ---------- Heritage / Our Story / Our Gems (parallax) ---------- */
   .tiles{background:var(--ivory);color:var(--ink);padding:40px clamp(20px,6vw,88px) 160px}
   .tiles .head{text-align:center;margin-bottom:48px}
-  .tiles .head h2{font-size:clamp(26px,3vw,40px);margin:8px 0 0;letter-spacing:.1em}
+  .tiles .head h2{font-size:clamp(26px,3vw,40px);margin:8px 0 0;letter-spacing:.02em}
   .tiles .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,2vw,28px);align-items:start}
   .tile{display:block;position:relative;text-decoration:none;color:var(--ivory);will-change:transform}
   .tile .frame{position:relative;aspect-ratio:3/4;overflow:hidden;background:#1b1612;border-radius:18px;isolation:isolate}
@@ -125,7 +134,7 @@
   .tile .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(10,8,6,.78) 100%)}
   .tile .txt{position:absolute;left:0;right:0;bottom:0;padding:clamp(18px,2vw,30px)}
   .tile .txt .label{color:#d8bf86}
-  .tile h3{font-size:clamp(22px,2vw,30px);margin:10px 0 8px;letter-spacing:.12em}
+  .tile h3{font-size:clamp(22px,2vw,30px);margin:10px 0 8px;letter-spacing:.03em}
   .tile p{margin:0;font-size:15.5px;line-height:1.5;opacity:.88}
   .tile .go{display:inline-block;margin-top:14px;font-family:var(--head);text-transform:uppercase;letter-spacing:.18em;font-size:11px;border-bottom:1px solid var(--gold);padding-bottom:4px}
   .tile:hover .media{filter:brightness(1.08)}
@@ -134,7 +143,7 @@
   .journal{background:var(--ivory);color:var(--ink);padding:0 clamp(20px,6vw,88px) clamp(110px,12vw,160px)}
   .journal .rule{height:1px;background:linear-gradient(90deg,transparent,rgba(169,138,75,.45),transparent);margin:0 auto clamp(70px,8vw,110px);max-width:1100px}
   .journal .head{text-align:center;max-width:640px;margin:0 auto 52px}
-  .journal .head h2{font-size:clamp(26px,3vw,40px);margin:12px 0 14px;letter-spacing:.1em}
+  .journal .head h2{font-size:clamp(26px,3vw,40px);margin:12px 0 14px;letter-spacing:.02em}
   .journal .head p{margin:0;font-size:18px;line-height:1.6;color:#4a4038;font-weight:300}
   .journal .list{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,2vw,28px)}
   .jcard{display:flex;flex-direction:column;text-decoration:none;color:inherit}
@@ -142,14 +151,17 @@
   .jcard .media{position:absolute;left:0;right:0;top:-10%;height:120%;will-change:transform;transition:transform .6s}
   .jcard .media canvas{width:100%;height:100%;display:block}
   .jcard .meta{display:flex;justify-content:space-between;gap:10px;margin:20px 0 10px;color:var(--deep-gold)}
-  .jcard h3{font-size:clamp(17px,1.35vw,20px);line-height:1.35;margin:0 0 10px;letter-spacing:.08em}
+  .jcard h3{font-size:clamp(17px,1.35vw,20px);line-height:1.35;margin:0 0 10px;letter-spacing:.02em}
   .jcard p{margin:0 0 16px;font-size:16px;line-height:1.55;color:#4a4038}
   .jcard .go{margin-top:auto;font-family:var(--head);text-transform:uppercase;letter-spacing:.18em;font-size:11px;align-self:flex-start;border-bottom:1px solid var(--gold);padding-bottom:4px}
   .jcard:hover .frame canvas{filter:brightness(1.08)}
   .journal .all{text-align:center;margin-top:56px}
   .journal .all a{display:inline-block;font-family:var(--head);text-transform:uppercase;letter-spacing:.18em;font-size:12px;text-decoration:none;color:var(--ink);
-                  border:1px solid var(--ink);border-radius:999px;padding:15px 26px 13px;transition:background .25s,color .25s}
-  .journal .all a:hover{background:var(--ink);color:var(--ivory)}
+                  border-radius:999px;padding:15px 28px 13px;transition:background .3s,border-color .3s,transform .3s;
+                  background:linear-gradient(135deg,rgba(255,255,255,.78),rgba(255,255,255,.3));border:1px solid rgba(20,17,15,.16);
+                  -webkit-backdrop-filter:blur(12px) saturate(150%);backdrop-filter:blur(12px) saturate(150%);
+                  box-shadow:inset 0 1px 0 #fff,0 10px 30px rgba(70,50,25,.14)}
+  .journal .all a:hover{background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(232,207,143,.35));border-color:rgba(125,98,48,.45);transform:translateY(-1px)}
   @media (max-width:1100px){ .journal .list{grid-template-columns:repeat(2,1fr);row-gap:48px} }
   @media (max-width:640px){ .journal .list{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:78%;overflow-x:auto;scroll-snap-type:x mandatory;
       margin:0 calc(-1 * clamp(20px,6vw,88px));padding:0 clamp(20px,6vw,88px) 8px;scrollbar-width:none} .jcard{scroll-snap-align:start} }
@@ -164,14 +176,21 @@
   .vault .veil{position:absolute;inset:0;z-index:-2;background:radial-gradient(ellipse 60% 55% at 50% 50%,rgba(7,9,18,.82),rgba(7,9,18,.25) 70%,rgba(7,9,18,.55))}
   .vault .content{max-width:760px;will-change:transform}
   .vault .label{color:#d8bf86}
-  .vault h2{font-size:clamp(30px,4.6vw,60px);line-height:1.1;margin:18px 0 18px;letter-spacing:.1em}
+  .vault h2{font-size:clamp(30px,4.6vw,60px);line-height:1.1;margin:18px 0 18px;letter-spacing:.02em}
   .vault p{font-size:clamp(17px,1.6vw,21px);line-height:1.6;opacity:.86;margin:0 auto 34px;max-width:560px;font-weight:300}
   .vault .cta{display:inline-flex;align-items:center;gap:12px;font-family:var(--head);text-transform:uppercase;letter-spacing:.18em;font-size:12.5px;
-              text-decoration:none;color:var(--ink);background:var(--gold);border-radius:999px;padding:17px 30px 15px;transition:background .25s,transform .25s}
-  .vault .cta:hover{background:#c4a462;transform:translateY(-2px)}
+              text-decoration:none;color:var(--ivory);border-radius:999px;padding:18px 32px 16px;transition:background .3s,border-color .3s,transform .3s;
+              background:linear-gradient(135deg,rgba(232,207,143,.34),rgba(169,138,75,.10));border:1px solid rgba(232,207,143,.6);
+              -webkit-backdrop-filter:blur(16px) saturate(170%);backdrop-filter:blur(16px) saturate(170%);
+              box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 -1px 0 rgba(0,0,0,.15),0 12px 34px rgba(0,0,0,.35)}
+  .vault .cta:hover{background:linear-gradient(135deg,rgba(232,207,143,.5),rgba(169,138,75,.2));border-color:rgba(242,216,150,.85);transform:translateY(-2px)}
   .vault .cta span{transition:transform .25s}.vault .cta:hover span{transform:translateX(4px)}
   .vault .note{display:block;margin-top:18px;font-family:var(--head);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;opacity:.55}
   .rm .vault .layer,.rm .vault .content{transform:none !important}
+  /* ---------- Rough-stone separators ---------- */
+  .sep{position:relative;pointer-events:none}
+  .sep canvas{display:block;width:100%;height:100%}
+  .sep-edge{height:clamp(34px,3.6vw,56px);margin-top:calc(-1 * clamp(34px,3.6vw,56px));z-index:6}   /* a quiet chipped-stone edge where the film meets the page */
   footer{padding:40px clamp(20px,6vw,88px);font-family:var(--head);text-transform:uppercase;letter-spacing:.14em;font-size:11px;opacity:.6;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 
 </style>
@@ -214,7 +233,8 @@
     <div class="grain" id="grain" aria-hidden="true"></div>
 
     <div class="cap" data-scene="0"><h2>Where it begins</h2>
-      <p>In the gravel of Ratnapura, a sapphire waits in the dark.</p></div>
+      <p>In the gravel of Ratnapura, a sapphire waits in the dark.</p>
+      <div class="scroll-hint" aria-hidden="true"><span class="sh-line"><i></i></span><span>Scroll to begin</span></div></div>
     <div class="cap" data-scene="1"><h2>Into the light</h2>
       <p>We raise it slowly, up through the shored shaft.</p></div>
     <div class="cap" data-scene="2"><h2>Weighed in the hand</h2>
@@ -228,12 +248,12 @@
       <span><b>The earth</b><i></i></span><span><b>The basket</b><i></i></span><span><b>The hands</b><i></i></span>
       <span><b>The wheel</b><i></i></span><span><b>The light</b><i></i></span>
     </div>
-    <div class="scroll-hint"><span>Scroll to begin</span></div>
   </div>
 </section>
 
 <section class="stills" id="stills" aria-label="From the earth to the finished stone"></section>
 
+<div class="sep sep-edge" aria-hidden="true"><canvas></canvas></div>
 <section class="letter" id="letter">
   <div class="mark" data-par="0.25"></div>
   <div class="inner" data-par="-0.08">
@@ -859,6 +879,25 @@ function resize() {
 }
 new ResizeObserver(resize).observe(canvas);
 const caps = [...document.querySelectorAll(".cap")], rail = [...document.querySelectorAll(".rail span")];
+// Split hero headlines (and the opening subline) into words for the word-by-word reveal
+function splitWords(el) {
+  if (!el) return [];
+  [...el.childNodes].forEach(n => {
+    if (n.nodeType !== 3) return;
+    const frag = document.createDocumentFragment();
+    n.textContent.split(/(\s+)/).forEach(t => { if (!t) return; if (/^\s+$/.test(t)) frag.append(t); else { const w = document.createElement("span"); w.className = "w"; w.textContent = t; frag.append(w); } });
+    n.replaceWith(frag);
+  });
+  return [...el.querySelectorAll(".w")];
+}
+caps.forEach((c, k) => { c._hw = splitWords(c.querySelector("h2")); if (k === 0) c._pw = splitWords(c.querySelector("p")); });
+let introStart = 0;   // set when the preloader lifts; drives the opening caption's timed reveal
+const INTRO = { word: .16, dur: .75, gap: .3, subWord: .07 };   // seconds: headline word stagger, each word's reveal, pause, subline stagger
+function wordStyle(w, a) {
+  w.style.opacity = a.toFixed(3);
+  w.style.transform = `translate3d(0, ${((1 - a) * 16).toFixed(1)}px, 0)`;
+  const b = (1 - a) * 12; w.style.filter = b > .1 ? `blur(${b.toFixed(1)}px)` : "none";
+}
 const steps = [...document.querySelectorAll(".cap .steps li")], hint = document.querySelector(".scroll-hint");
 function frameOf(local) { const F = state.mobile ? CONFIG.framesMobile : CONFIG.framesDesktop, f = Math.round(clamp(local) * (F - 1)); return [f, f / (F - 1)]; }
 
@@ -877,21 +916,44 @@ function render(time) {
   // captions: fade in 10–22%, out 70–82% of each scene; they drift up faster than the scene (parallax)
   // captions: each line has its own speed (headline travels furthest, the subline lags behind),
   // the subline arrives a beat later and leaves a beat earlier, and lines blur out of focus as they go
+  // Each line keeps its own speed (headline travels furthest, the subline lags behind) and blurs out as it leaves.
+  // Headlines arrive word by word, each word coming into focus; scene I's headline and subline play on a timer
+  // as the preloader lifts, the other scenes' headlines are driven by the scroll.
+  const introT = loaderDone ? (performance.now() - introStart) / 1000 : -1;
   caps.forEach((c, k) => {
     const l = pos - k, last = k === S - 1;
-    (c._parts || (c._parts = [...c.children].map(el => ({ el, sp: el.tagName === "H2" ? 1 : el.classList.contains("num") ? .7 : .42, lag: el.tagName === "H2" || el.classList.contains("num") ? 0 : .05 }))))
-      .forEach(({ el, sp, lag }) => {
+    (c._parts || (c._parts = [...c.children].filter(el => !el.classList.contains("scroll-hint"))
+      .map(el => ({ el, sp: el.tagName === "H2" ? 1 : .42, lag: el.tagName === "H2" ? 0 : .05, words: el.tagName === "H2" ? c._hw : (k === 0 && el.tagName === "P" ? c._pw : null) }))))
+      .forEach(({ el, sp, lag, words }) => {
         let aIn = seg(l, .1 + lag, .24 + lag), aOut = last ? 1 : 1 - seg(l, .68 - lag, .82 - lag);
         if (k === 0) aIn = 1;
-        const a = aIn * aOut, y = (last ? 0 : (clamp(l, 0, 1) - (k === 0 ? 0 : .45)) * -120 * sp)   /* closing line stays put below the stone */   /* scene I starts at rest, so its spacing reads true on arrival */ + (1 - aIn) * 22 * sp - (1 - aOut) * 26 * sp;
-        el.style.opacity = a.toFixed(3);
+        const y = (last ? 0 : (clamp(l, 0, 1) - (k === 0 ? 0 : .45)) * -120 * sp) + (words ? 0 : (1 - aIn) * 22 * sp) - (1 - aOut) * 26 * sp;
         el.style.transform = `translate3d(0, ${y.toFixed(1)}px, 0)`;
-        const blur = (1 - aIn) * 6 + (1 - aOut) * 12; el.style.filter = blur > .1 ? `blur(${blur.toFixed(1)}px)` : "none";
+        if (words) {   // the element only handles the exit; each word handles its own entrance
+          el.style.opacity = aOut.toFixed(3);
+          const bo = (1 - aOut) * 12; el.style.filter = bo > .1 ? `blur(${bo.toFixed(1)}px)` : "none";
+          const n = words.length;
+          words.forEach((w, j) => {
+            let a;
+            if (state.rm) a = 1;
+            else if (k === 0) {
+              const start = el.tagName === "H2" ? j * INTRO.word : (c._hw.length - 1) * INTRO.word + INTRO.dur + INTRO.gap + j * INTRO.subWord;
+              a = introT < 0 ? 0 : ease(clamp((introT - start) / INTRO.dur));
+            } else { const st = .08 + j * (.14 / Math.max(1, n - 1 || 1)); a = ease(seg(l, st, st + .12)); }
+            wordStyle(w, a);
+          });
+        } else {
+          el.style.opacity = (aIn * aOut).toFixed(3);
+          const blur = (1 - aIn) * 6 + (1 - aOut) * 12; el.style.filter = blur > .1 ? `blur(${blur.toFixed(1)}px)` : "none";
+        }
       });
   });
   rail.forEach((r, k) => r.classList.toggle("on", k === i));
   if (i === 3) steps.forEach((s, k) => s.classList.toggle("on", local >= [.08, .3, .52, .74][k]));
-  hint.style.opacity = loaderDone ? ((1 - seg(state.p, 0, .03)) * .92).toFixed(3) : 0;
+  const cueAt = (caps[0]._hw.length - 1) * INTRO.word + INTRO.dur + INTRO.gap + (caps[0]._pw.length - 1) * INTRO.subWord + INTRO.dur;
+  const cueIn = state.rm ? 1 : (introT < 0 ? 0 : ease(clamp((introT - cueAt + .2) / .7)));
+  hint.style.opacity = (cueIn * (1 - seg(state.p, 0, .03))).toFixed(3);
+  hint.style.transform = `translate3d(0, ${((1 - cueIn) * 12).toFixed(1)}px, 0)`;
 }
 
 /* ===================================================================
@@ -1077,6 +1139,70 @@ function bandParallax() {
 }
 
 /* ===================================================================
+   ROUGH-STONE SEPARATORS — a chipped ivory edge over the film, and a stone ledge after the letter
+   =================================================================== */
+function chipLine(w, y0, amp, seed) {   // coarse breaks, then finer chips: a broken-stone profile
+  const r = rng(seed), pts = []; let x = 0;
+  while (x < w) { pts.push([x, y0 + (r() - .5) * amp]); x += 26 + r() * 70; }
+  pts.push([w, y0 + (r() - .5) * amp]);
+  for (let pass = 0; pass < 2; pass++) {
+    const out = [];
+    for (let i = 0; i < pts.length - 1; i++) { const a = pts[i], b = pts[i + 1], t = .3 + r() * .4, d = Math.hypot(b[0] - a[0], b[1] - a[1]);
+      out.push(a, [lerp(a[0], b[0], t), lerp(a[1], b[1], t) + (r() - .5) * d * (pass ? .22 : .35)]); }
+    out.push(pts[pts.length - 1]); pts.splice(0, pts.length, ...out);
+  }
+  return pts;
+}
+function chipFacets(c, pts, dir, r, lightCol, darkCol) {   // bevelled chip faces along the break, lit from the upper left
+  for (let i = 0; i < pts.length - 1; i++) {
+    const a = pts[i], b = pts[i + 1], d1 = 4 + r() * 11, d2 = 4 + r() * 11, slope = (b[1] - a[1]) / Math.max(1, b[0] - a[0]);
+    c.beginPath(); c.moveTo(a[0], a[1]); c.lineTo(b[0], b[1]); c.lineTo(b[0], b[1] + d2 * dir); c.lineTo(a[0], a[1] + d1 * dir); c.closePath();
+    const lit = clamp(.5 - slope * dir * 1.4 + (r() - .5) * .5);
+    c.fillStyle = lit > .5 ? lightCol(lit) : darkCol(1 - lit); c.fill();
+  }
+}
+function stoneSkin(c, w, h, path, base, seed, grainA) {
+  c.save(); c.clip(path);
+  c.fillStyle = base; c.fillRect(0, 0, w, h);
+  c.globalAlpha = grainA; c.globalCompositeOperation = "multiply"; c.fillStyle = c.createPattern(NOISE, "repeat"); c.fillRect(0, 0, w, h);
+  c.globalCompositeOperation = "source-over"; c.globalAlpha = 1;
+  const r = rng(seed);
+  for (let k = 0; k < w * h / 260; k++) { c.fillStyle = r() < .55 ? `rgba(90,72,52,${.08 + r() * .18})` : `rgba(255,255,255,${.25 + r() * .4})`; c.fillRect(r() * w, r() * h, 1 + r() * 1.6, 1 + r() * 1.6); }
+  c.restore();
+}
+function paintSeparators() {
+  const d = Math.min(devicePixelRatio || 1, 2);
+  document.querySelectorAll(".sep").forEach((sep, n) => {
+    const cv = sep.querySelector("canvas"), rct = sep.getBoundingClientRect(), w = rct.width, h = rct.height; if (!w) return;
+    cv.width = w * d; cv.height = h * d; const c = cv.getContext("2d"); c.setTransform(d, 0, 0, d, 0, 0); c.clearRect(0, 0, w, h);
+    const r = rng(500 + n);
+    if (sep.classList.contains("sep-edge")) {
+      const top = chipLine(w, h * .5, h * .38, 31), body = new Path2D();
+      body.moveTo(0, h); top.forEach(([x, y]) => body.lineTo(x, y)); body.lineTo(w, h); body.closePath();
+      c.save(); c.shadowColor = "rgba(0,0,0,.3)"; c.shadowBlur = 10; c.shadowOffsetY = -2; c.fillStyle = "#efe9df"; c.fill(body); c.restore();
+      const g = c.createLinearGradient(0, 0, 0, h); g.addColorStop(0, "#e7dfd1"); g.addColorStop(.6, "#f1ece3"); g.addColorStop(1, "#f6f2ec");
+      stoneSkin(c, w, h, body, g, 41, .08);
+      c.save(); c.clip(body); chipFacets(c, top, 1, r, a => `rgba(255,255,255,${.12 + a * .22})`, a => `rgba(120,98,70,${.04 + a * .1})`); c.restore();
+      const fade = c.createLinearGradient(0, h * .6, 0, h); fade.addColorStop(0, "rgba(246,242,236,0)"); fade.addColorStop(1, "#f6f2ec");   // melts into the letter
+      c.save(); c.clip(body); c.fillStyle = fade; c.fillRect(0, 0, w, h); c.restore();
+      c.strokeStyle = "rgba(255,255,255,.22)"; c.lineWidth = 1; c.beginPath(); top.forEach(([x, y], i) => i ? c.lineTo(x, y) : c.moveTo(x, y)); c.stroke();
+    } else {
+      const topL = chipLine(w, h * .3, h * .26, 57), botL = chipLine(w, h * .74, h * .22, 73), band = new Path2D();
+      topL.forEach(([x, y], i) => i ? band.lineTo(x, y) : band.moveTo(x, y)); [...botL].reverse().forEach(([x, y]) => band.lineTo(x, y)); band.closePath();
+      c.save(); c.shadowColor = "rgba(60,40,20,.28)"; c.shadowBlur = 14; c.shadowOffsetY = 6; c.fillStyle = "#b9ad9a"; c.fill(band); c.restore();
+      const g = c.createLinearGradient(0, h * .2, 0, h * .85); g.addColorStop(0, "#cfc4b2"); g.addColorStop(.5, "#b3a690"); g.addColorStop(1, "#978973");
+      stoneSkin(c, w, h, band, g, 89, .3);
+      c.save(); c.clip(band);
+      chipFacets(c, topL, 1, r, a => `rgba(255,252,244,${.3 + a * .45})`, a => `rgba(70,55,38,${.1 + a * .25})`);
+      chipFacets(c, botL, -1, r, a => `rgba(255,252,244,${.12 + a * .2})`, a => `rgba(55,42,28,${.18 + a * .3})`);
+      c.restore();
+    }
+  });
+}
+let sepW = 0;
+new ResizeObserver(() => { const w = document.documentElement.clientWidth; if (Math.abs(w - sepW) > 4) { sepW = w; paintSeparators(); } }).observe(document.body);
+
+/* ===================================================================
    SCROLL — sticky viewport + GSAP ScrollTrigger scrub (native fallback)
    =================================================================== */
 const wrap = document.getElementById("hero"), hasGSAP = !!(window.gsap && window.ScrollTrigger);
@@ -1152,7 +1278,7 @@ let loaderDone = false;
   function finish() {
     finished = true; fill.style.transform = "scaleX(1)";
     setTimeout(() => {
-      el.classList.add("done"); root.style.overflow = ""; lenis?.start(); loaderDone = true; if (hasGSAP) ScrollTrigger.refresh();
+      el.classList.add("done"); root.style.overflow = ""; lenis?.start(); loaderDone = true; introStart = performance.now() + 250; if (hasGSAP) ScrollTrigger.refresh();
       hint.classList.add("intro"); armNudge();
       setTimeout(() => el.remove(), 900);
     }, 180);
