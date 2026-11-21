@@ -149,12 +149,12 @@
   .jcard{display:flex;flex-direction:column;text-decoration:none;color:inherit}
   .jcard .frame{position:relative;aspect-ratio:4/5;overflow:hidden;border-radius:16px;background:#1b1612;isolation:isolate}
   .jcard .media{position:absolute;left:0;right:0;top:-10%;height:120%;will-change:transform;transition:transform .6s}
-  .jcard .media canvas{width:100%;height:100%;display:block}
+  .jcard .media canvas,.jcard .media img{width:100%;height:100%;display:block;object-fit:cover}
   .jcard .meta{display:flex;justify-content:space-between;gap:10px;margin:20px 0 10px;color:var(--deep-gold)}
   .jcard h3{font-size:clamp(17px,1.35vw,20px);line-height:1.35;margin:0 0 10px;letter-spacing:.02em}
   .jcard p{margin:0 0 16px;font-size:16px;line-height:1.55;color:#4a4038}
   .jcard .go{margin-top:auto;font-family:var(--head);text-transform:uppercase;letter-spacing:.18em;font-size:11px;align-self:flex-start;border-bottom:1px solid var(--gold);padding-bottom:4px}
-  .jcard:hover .frame canvas{filter:brightness(1.08)}
+  .jcard:hover .frame canvas,.jcard:hover .frame img{filter:brightness(1.08)}
   .journal .all{text-align:center;margin-top:56px}
   .journal .all a{display:inline-block;font-family:var(--head);text-transform:uppercase;letter-spacing:.18em;font-size:12px;text-decoration:none;color:var(--ink);
                   border-radius:999px;padding:15px 28px 13px;transition:background .3s,border-color .3s,transform .3s;
@@ -362,7 +362,8 @@ const SEQUENCES = [   // 96 frames per scene; phones use the same frames cropped
   { d: { path: "frames/s4/", count: 96 } },   // IV · Cutting & polishing (Gemini test clip)
   { d: { path: "frames/s5/", count: 96 } },   // V · The finished stone (Gemini test clip)
 ];
-const PHOTOS = { scenes: [null, null, null, null, null], tiles: { heritage: null, story: null, gems: null } };
+const PHOTOS = { scenes: [null, null, null, null, null], tiles: { heritage: "img/tile-heritage.webp", story: "img/tile-story.webp", gems: "img/tile-gems.webp" },
+  journal: { heat: "img/journal-heat.webp", earth: "img/journal-earth.webp", padparadscha: "img/journal-padparadscha.webp", report: "img/journal-report.webp" } };
 
 /* ---------- Environment ---------- */
 const root = document.documentElement;
@@ -1072,7 +1073,9 @@ const JOURNAL_ART = {
 };
 const jcards = [...document.querySelectorAll(".jcard")];
 function paintJournal() { const d = Math.min(devicePixelRatio || 1, 2);
-  jcards.forEach(card => { const box = card.querySelector(".media"), r = box.getBoundingClientRect(); if (!r.width) return;
+  jcards.forEach(card => { const box = card.querySelector(".media"), src = PHOTOS.journal[card.dataset.art];
+    if (src) { if (!box.querySelector("img")) { const img = new Image(); img.alt = ""; img.decoding = "async"; img.src = src; box.innerHTML = ""; box.append(img); } return; }
+    const r = box.getBoundingClientRect(); if (!r.width) return;
     const cv = makeCanvas(r.width * d, r.height * d), c = cv.getContext("2d"); c.scale(d, d); JOURNAL_ART[card.dataset.art](c, r.width, r.height); box.innerHTML = ""; box.append(cv); }); }
 let journalW = 0;
 new ResizeObserver(() => { const w = jcards[0].getBoundingClientRect().width; if (Math.abs(w - journalW) > 4) { journalW = w; paintJournal(); } }).observe(document.querySelector(".journal .list"));
@@ -1083,8 +1086,8 @@ const tiles = [...document.querySelectorAll(".tile")];
 const tileMedia = {};
 function paintTile(tile) {
   const key = tile.dataset.tile, box = tile.querySelector(".media"), src = tileMedia[key] || PHOTOS.tiles[key];
+  if (src) { if (box.querySelector("img")) return; box.innerHTML = ""; const img = new Image(); img.alt = ""; img.src = src; box.append(img); return; }
   box.innerHTML = "";
-  if (src) { const img = new Image(); img.alt = ""; img.src = src; box.append(img); return; }
   const r = box.getBoundingClientRect(), d = Math.min(devicePixelRatio || 1, 2), cv = makeCanvas(Math.max(2, r.width * d), Math.max(2, r.height * d));
   const c = cv.getContext("2d"); c.scale(d, d); TILE_ART[key](c, r.width, r.height); box.append(cv);
 }
