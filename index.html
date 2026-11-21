@@ -54,9 +54,9 @@
   .cap h2{font-size:clamp(19px,4.6vw,54px);line-height:1.08;margin:10px 0 24px;letter-spacing:.02em;white-space:nowrap}   /* headlines never wrap */
   .cap p{font-size:20px;line-height:1.5;opacity:.9;margin:0;font-weight:300;white-space:nowrap}
   .cap .w{display:inline-block;will-change:opacity,transform,filter}   /* words revealed one by one */
-  .cap[data-scene="0"]{bottom:clamp(170px,31vh,330px)}               /* opening caption sits higher, with the scroll cue beneath */
+  .cap[data-scene="0"] .scroll-hint{position:absolute;left:0;top:100%;margin-top:clamp(22px,3.4vh,34px)}   /* opening caption matches other frames; cue hangs beneath */
   @media (max-width:900px){ .cap p{white-space:normal;max-width:min(520px,80vw)} }
-  @media (max-width:700px){ .cap h2{font-size:5.6vw;letter-spacing:.02em;margin-bottom:18px} .cap p{font-size:17px} .cap[data-scene="0"]{bottom:26vh} }
+  @media (max-width:700px){ .cap h2{font-size:5.6vw;letter-spacing:.02em;margin-bottom:18px} .cap p{font-size:17px} .cap[data-scene="0"] .scroll-hint{margin-top:20px} }
   .cap .steps{list-style:none;padding:0;margin:18px 0 0;display:flex;gap:10px;flex-wrap:wrap}
   .cap .steps li{font-family:var(--head);font-size:11px;letter-spacing:.18em;text-transform:uppercase;padding:9px 11px 7px;
                  border:1px solid rgba(246,242,236,.18);background:rgba(20,17,15,.45);opacity:.3;transition:opacity .35s,border-color .35s}
